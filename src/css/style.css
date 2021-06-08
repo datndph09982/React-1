@@ -1,0 +1,48 @@
+.bg-header{
+    background-image: url("../image/bg_header2.png");
+    background-size: cover;
+}
+.image_coffee_slide_1{
+    background-image: url("http://coffeeking.like-themes.com/wp-content/uploads/2017/09/coffee_slide-2-1.jpg");
+    background-size: cover;
+}
+.image_coffee_home1{
+    background-image: url("http://coffeeking.like-themes.com/wp-content/uploads/2017/09/coffee-bg.png");
+    background-size: auto;
+    /* background-repeat: no-repeat; */
+    
+}
+.image_coffee_home2{
+    background-image: url("http://coffeeking.like-themes.com/wp-content/uploads/2017/09/coffee-cup-1.png");
+    background-size: auto;
+    background-repeat: no-repeat;
+}
+.image_footer{
+    background-image: url("http://coffeeking.like-themes.com/wp-content/uploads/2017/09/footer_map.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.image_contact{
+    background-image: url("../image/bg-contact.jpg");
+    background-size: cover;
+}
+.slick-arrow {
+    width: 50px;
+    height: 50px;
+    background-color: #242424;
+}
+
+
+
+/* .linkheader li{ 
+    font-family: 'Font Awesome 5 Free';
+}
+.linkheader li:not(:last-child):after {
+    margin: 0 7px 0 12px;
+    content: "\f105";
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+} */
