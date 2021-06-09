@@ -4,7 +4,7 @@ import bg_header from '../image/bg_header.jpg';
 import {NavLink,Link} from 'react-router-dom';
 import Footer from '../components/Footer';
 const Website = ({title="title",className,children}) => {
-    window.scrollTo(0,0);
+    // window.scrollTo(0,0);
     return (
         <div className={className}>
             <Header/>

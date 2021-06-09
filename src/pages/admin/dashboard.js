@@ -1,8 +1,8 @@
 import React from 'react'
 import Admin from '../../Layouts/admin';
 
-const Dashboard = () => {
-    
+const Dashboard = ({Products,Categories,User,Contact}) => {
+    console.log(Categories[0].createdAt);
     return (
         <Admin title="dashboard">
 
@@ -15,8 +15,8 @@ const Dashboard = () => {
                                 <div className="rounded-full p-5 bg-green-600"><i className="fa fa-wallet fa-2x fa-inverse" /></div>
                             </div>
                             <div className="flex-1 text-right md:text-center">
-                                <h5 className="font-bold uppercase text-gray-600">Total Revenue</h5>
-                                <h3 className="font-bold text-3xl">$3249 <span className="text-green-500"><i className="fas fa-caret-up" /></span></h3>
+                                <h5 className="font-bold uppercase text-gray-600">Total Products</h5>
+                                <h3 className="font-bold text-3xl">{Products.length} <span className="text-green-500"><i className="fas fa-caret-up" /></span></h3>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@ const Dashboard = () => {
                             </div>
                             <div className="flex-1 text-right md:text-center">
                                 <h5 className="font-bold uppercase text-gray-600">Total Users</h5>
-                                <h3 className="font-bold text-3xl">249 <span className="text-pink-500"><i className="fas fa-exchange-alt" /></span></h3>
+                                <h3 className="font-bold text-3xl">{User.length} <span className="text-pink-500"><i className="fas fa-exchange-alt" /></span></h3>
                             </div>
                         </div>
                     </div>
@@ -45,8 +45,8 @@ const Dashboard = () => {
                                 <div className="rounded-full p-5 bg-yellow-600"><i className="fas fa-user-plus fa-2x fa-inverse" /></div>
                             </div>
                             <div className="flex-1 text-right md:text-center">
-                                <h5 className="font-bold uppercase text-gray-600">New Users</h5>
-                                <h3 className="font-bold text-3xl">2 <span className="text-yellow-600"><i className="fas fa-caret-up" /></span></h3>
+                                <h5 className="font-bold uppercase text-gray-600">Total news</h5>
+                                <h3 className="font-bold text-3xl"> <span className="text-yellow-600"><i className="fas fa-caret-up" /></span></h3>
                             </div>
                         </div>
                     </div>
@@ -60,8 +60,8 @@ const Dashboard = () => {
                                 <div className="rounded-full p-5 bg-blue-600"><i className="fas fa-server fa-2x fa-inverse" /></div>
                             </div>
                             <div className="flex-1 text-right md:text-center">
-                                <h5 className="font-bold uppercase text-gray-600">Server Uptime</h5>
-                                <h3 className="font-bold text-3xl">152 days</h3>
+                                <h5 className="font-bold uppercase text-gray-600">Total category</h5>
+                                <h3 className="font-bold text-3xl">{Categories.length}</h3>
                             </div>
                         </div>
                     </div>
@@ -75,8 +75,8 @@ const Dashboard = () => {
                                 <div className="rounded-full p-5 bg-indigo-600"><i className="fas fa-tasks fa-2x fa-inverse" /></div>
                             </div>
                             <div className="flex-1 text-right md:text-center">
-                                <h5 className="font-bold uppercase text-gray-600">To Do List</h5>
-                                <h3 className="font-bold text-3xl">7 tasks</h3>
+                                <h5 className="font-bold uppercase text-gray-600">Total contact</h5>
+                                <h3 className="font-bold text-3xl">{Contact.length}</h3>
                             </div>
                         </div>
                     </div>
@@ -90,8 +90,8 @@ const Dashboard = () => {
                                 <div className="rounded-full p-5 bg-red-600"><i className="fas fa-inbox fa-2x fa-inverse" /></div>
                             </div>
                             <div className="flex-1 text-right md:text-center">
-                                <h5 className="font-bold uppercase text-gray-600">Issues</h5>
-                                <h3 className="font-bold text-3xl">3 <span className="text-red-500"><i className="fas fa-caret-up" /></span></h3>
+                                <h5 className="font-bold uppercase text-gray-600">Order</h5>
+                                <h3 className="font-bold text-3xl"> <span className="text-red-500"><i className="fas fa-caret-up" /></span></h3>
                             </div>
                         </div>
                     </div>

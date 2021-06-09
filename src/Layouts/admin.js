@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link, NavLink} from 'react-router-dom';
 const Admin = ({ title = "title", className, children }) => {
-    window.scrollTo(0,0);
+    // window.scrollTo(0,0);
 
     return (
 
@@ -69,9 +69,9 @@ const Admin = ({ title = "title", className, children }) => {
                                 </NavLink>
                             </li>
                             <li className="mr-3 flex-1">
-                                <a href="#" className="block py-1 md:py-3 pl-0 md:pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-red-500">
-                                    <i className="fa fa-wallet pr-0 md:pr-3" /><span className="pb-1 md:pb-0 text-xs md:text-base text-gray-600 md:text-gray-400 block md:inline-block">Payments</span>
-                                </a>
+                                <NavLink to="/admin/contact/list" className="block py-1 md:py-3 pl-0 md:pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-red-500">
+                                    <i className="fa fa-wallet pr-0 md:pr-3" /><span className="pb-1 md:pb-0 text-xs md:text-base text-gray-600 md:text-gray-400 block md:inline-block">Contact</span>
+                                </NavLink>
                             </li>
                         </ul>
                     </div>
@@ -80,7 +80,6 @@ const Admin = ({ title = "title", className, children }) => {
                     <div className="bg-gray-800 pt-3">
                         <div className="flex flex-row rounded-tl-3xl bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
                                 <h3 className="font-bold pl-4">{title}</h3>
-                            
                         </div>
                     </div>
                     <div>{children}</div>

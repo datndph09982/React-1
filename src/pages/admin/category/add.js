@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Admin from '../../../Layouts/admin';
-
+import swal from 'sweetalert';
 const Addcate = ({ onAddCate }) => {
     let history = useHistory();
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -12,12 +12,8 @@ const Addcate = ({ onAddCate }) => {
         uploads.append("name", data.name);
         uploads.append("description", data.description);
         uploads.append("image", data.image[0]);
-        // let fakeCategory = {
-        //     ...data,
-        //     id: uuidv4(),
-        // }
-        // console.log(fakeCategory);
         onAddCate(uploads);
+        swal("You add new success!", "...comeback to list!");
         history.push('/admin/category/list');
     }
     return (
@@ -29,7 +25,6 @@ const Addcate = ({ onAddCate }) => {
                 <div className="flex flex-wrap mx-3 mb-6">
                     <div className="w-full md:w-2/3 px-3 mb-6 md:mb-0">
                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ">
-                                
                             Name
                         </label>
                         <input id="name_cate" className={`appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white 

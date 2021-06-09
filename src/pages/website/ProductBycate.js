@@ -6,7 +6,6 @@ import Website from '../../Layouts/website'
 const ProductBycate = ({Products,Categories}) => {
     const { id } = useParams();
     const [category, setCategory] = useState({});
-    const [prodCate,setProdcate] = useState({});
     console.log(category);
     useEffect(() => {
         const getCategory = async () => {
@@ -45,6 +44,12 @@ const ProductBycate = ({Products,Categories}) => {
                         <div className="text-3xl font-bold border-b-2 border-gray-300 py-2 mb-6">Category</div>
                         <div>
                             <ul>
+                                <li className="text-lg font-bold mb-4">
+                                    <Link className="hover:text-[#c0aa83] focus:text-[#c0aa83]" to="/product" exact activeClassName="active">
+                                    <li className="fas fa-angle-right mr-2 text-[#c0aa83]"></li>
+                                        All products
+                                    </Link>
+                                </li>
                                 {Categories.map(((cate,index)=>{
                                     return <li className="   text-lg font-bold mb-4">
                                                 <Link key={index} className="hover:text-[#c0aa83] focus:text-[#c0aa83]" to={`/prodbycate/${cate._id}`} exact activeClassName="active">
@@ -60,7 +65,9 @@ const ProductBycate = ({Products,Categories}) => {
                 {/* main content shop page */}
                 <div className="col-span-3 px-4">
                     <div className="mb-24">
-                        <div className="float-left text-lg text-gray-700 font-medium py-4">Showing all products</div>
+                        <div className="float-left text-lg text-gray-700 font-medium py-4 flex items-center">Showing {productById.length} products of 
+                            <p className="text-3xl ml-2 font-bold text-[#c0aa83]">{category.name}</p>
+                        </div>
                         <div className="float-right w-48 px-5 py-4 border-gray-400 border">
                         <select >
                             <option selected>Default sorting</option>

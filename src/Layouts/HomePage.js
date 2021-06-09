@@ -3,7 +3,7 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 
 const HomePage = (props) => {
-    window.scrollTo(0,0);
+    // window.scrollTo(0,0);
 
     return (
         <div>

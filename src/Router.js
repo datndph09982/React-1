@@ -29,6 +29,8 @@ import AdminRoute from './auth/AdminRoute';
 import Products from './components/Test';
 import ProductBycate from './pages/website/ProductBycate';
 import Test from './components/Test';
+import CateHome from './pages/website/CateHome';
+import Listcontact from './pages/admin/contact/list';
 const Routers = (props) => {
     return (
         <div>
@@ -52,6 +54,9 @@ const Routers = (props) => {
                                <AdminRoute exact path="/admin/category/add">
                                     <Addcate {...props} />
                                </AdminRoute>
+                               <AdminRoute exact path="/admin/contact/list">
+                                    <Listcontact {...props}/>
+                               </AdminRoute>
                                <Route exact path="/admin/category/update/:id">
                                     <Updatecate {...props}/>
                                </Route>
@@ -67,12 +72,19 @@ const Routers = (props) => {
                                 <Route exact path="/"  >
                                     <Home {...props}/> 
                                 </Route>
+                                <Route exact path="/homecate/:id"  >
+                                    <CateHome {...props}/> 
+                                </Route>
                                 <PrivateRoute exact path="/inforuser">
                                     <InforUser />
                                 </PrivateRoute>
                                 <Route path="/about" exact component={About} />
-                                <Route path="/contact" exact component={Contact}/>
-                                <Route path="/product/:id" exact component={DetailProduct}/>
+                                <Route path="/contact" exact >
+                                    <Contact {...props}/>    
+                                </Route>
+                                <Route path="/product/:id" exact >
+                                    <DetailProduct {...props}/>    
+                                </Route>
                                 <Route path="/signin" >
                                     <SignIn />    
                                 </Route>

@@ -1,20 +1,50 @@
 import React from 'react'
 import Website from '../../Layouts/website'
-
-const Contact = () => {
+import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import swal from 'sweetalert';
+const Contact = ({ onAddContact }) => {
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const onSubmit = (data) => {
+        let uploads = new FormData();
+        uploads.append("name", data.name);
+        uploads.append("email", data.email);
+        uploads.append("title", data.title);
+        uploads.append("content",data.content);
+        console.log(data);
+        swal("Thanks you for give contact!", "Have a nice day!");
+        onAddContact(uploads);
+    }
     return (
         <Website title="Contact">
-            <div>
                 <div className="lienhe image_contact" >
                     <div className="grid grid-cols-1 md:grid-cols-2">
                         <div className="contact text-center py-4">
                             <h1 className="mt-5 mb-2 text-center text-white text-2xl font-bold">CONTACT WITH US</h1>
-                            <form action="lien-he.php" method="post" encType="multipart/form-data" id="form-add">
-                                <input id="name_contact" className="bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white " name="ho_ten" placeholder="Name" /><br />
-                                <input id="email_contact" type="email" name="gmail" className="bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white  " placeholder="Email " /><br />
-                                <input id="title_contact" type="text" name="tieu_de" className="bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white " placeholder="Title" /><br />
-                                <textarea id="content_contact" type="text" name="noi_dung" className="bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white " rows={4} placeholder="Content" defaultValue={""} /><br />
-                                <div className=" "><button type="submit" className="btn btn-outline-primary border-2 border-white rounded-md w-20 text-white font-bold " name="btn_Lienhe">Send</button></div>
+                            <form  id="form-add" onSubmit={handleSubmit(onSubmit)}>
+                                    <input id="name_cate" className={`bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white 
+                                    ${errors.name ? 'border border-red-500' : ''}`}
+                                    placeholder="Name"
+                                    {...register('name', { required: true })}  type="text" placeholder="Name " />
+
+                                    <input type="email" id="name_cate" className={`bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white 
+                                    ${errors.name ? 'border border-red-500' : ''}`}
+                                    placeholder="Name"
+                                    {...register('email', { required: true })}  type="text" placeholder="Email" />
+
+                                    <input id="name_cate" className={`bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white 
+                                    ${errors.name ? 'border border-red-500' : ''}`}
+                                    placeholder="Name"
+                                    {...register('title', { required: true })}  type="text" placeholder="Title" />
+
+                                    <textarea id="name_cate" className={`bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white 
+                                    ${errors.name ? 'border border-red-500' : ''}`}
+                                    {...register('content', { required: true })}  type="text" placeholder="Content" ></textarea>
+                                {/* <input {...register('email', { required: true })} id="email_contact" type="text" name="gmail" className="bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white  " placeholder="Email " /><br />
+                                <input {...register('title', { required: true })} id="title_contact" type="text" name="tieu_de" className="bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white " placeholder="Title" /><br />
+                                <textarea {...register('content', { required: true })} id="content_contact" type="text" name="noi_dung" className="bg-gray-500 bg-opacity-75 rounded-xl w-10/12 md:w-3/5 border-none text-white p-2 m-2 placeholder-white " rows={4} placeholder="Content"  /><br /> */}
+                                <div className=" ">
+                                    <button type="submit" className="btn btn-outline-primary border-2 border-white rounded-md w-20 text-white font-bold " name="btn_Lienhe">Send</button></div>
                             </form>
                         </div>
                         <div className="flex justify-center">
@@ -62,7 +92,7 @@ const Contact = () => {
                         </ul>
                         <p />
                     </div>
-                </div></div>
+                </div>
 
         </Website>
     )

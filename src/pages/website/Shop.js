@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import Website from '../../Layouts/website'
 import {Link} from 'react-router-dom';
 const ListProduct = ({Products,Categories}) => {
-    console.log(Products);
-    
     const productList = Products.map((product,index)=>{
         return <div key={index} className="bg-white border-gray-100 border h-[500px] w-[260px] px-6 pt-6 pb-10 mb-24 text-center hover:shadow-2xl">
                 <img className="w-48 h-48 mb-4" src={`http://localhost:4000/api/product/image/${product._id}`} />
@@ -28,6 +26,12 @@ const ListProduct = ({Products,Categories}) => {
                         <div className="text-3xl font-bold border-b-2 border-gray-300 py-2 mb-6">Category</div>
                         <div>
                             <ul>
+                                <li className="text-lg font-bold mb-4">
+                                    <Link className="hover:text-[#c0aa83] focus:text-[#c0aa83]" to="/product" exact activeClassName="active">
+                                    <li className="fas fa-angle-right mr-2 text-[#c0aa83]"></li>
+                                        All products
+                                    </Link>
+                                </li>
                                 {Categories.map(((cate,index)=>{
                                     return <li className="   text-lg font-bold mb-4">
                                                 <Link  className="hover:text-[#c0aa83] focus:text-[#c0aa83]" to={`/prodbycate/${cate._id}`} exact activeClassName="active">

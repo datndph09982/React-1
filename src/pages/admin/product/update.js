@@ -25,19 +25,7 @@ const Updateproduct = ({ onUpdatePro, Categories }) => {
             categoryId: detailPro.categoryId
         }
     });
-    useEffect(() => {
-        const listProduct = async () => {
-            const { data } = await ProductApi.get(id);
-            const {categoryId, ...newProduct } =data;
-            const {_id} =categoryId;
-            const idCategory = {categoryId:_id};
-            const product = {...idCategory, ...newProduct}
-            setDetail(product);
-            reset(product);
-            
-        }
-        listProduct();
-    }, []);
+    
     useEffect(()=>{
         const cateId = async () =>{
             const {data:category} =await CategoryApi.get(detailPro.categoryId);

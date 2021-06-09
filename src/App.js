@@ -8,25 +8,36 @@ import CategoryApi from './api/CategoryApi.js'
 import { Router } from 'react-router';
 import Addcate from './pages/admin/category/add';
 import UserApi from './api/userApi';
+import ContactApi from './api/ContactApi';
 function App() {
 
 
   const [products, setProducts] = useState([]);
   const [categories, setCategory] = useState([]);
-  const [users, setUser] = useState([]);
-  const [news, setNews] = useState([]);
-  const [updateCategory,setUpdateCategory] = useState();
-  // useEffect(() => {
-  //   const listBlog = async () => {
-  //     try {
-  //       const { data: blog } = await blogAPI.getAll();
-  //       setBlog(blog);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   listBlog();
-  // }, [])
+  const [contacts, setContact] = useState([]);
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const listUser = async () => {
+      try {
+        const { data: user } = await UserApi.getAll();
+        setUsers(user);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    listUser();
+  }, [])
+  useEffect(() => {
+    const listContact = async () => {
+      try {
+        const { data: contact } = await ContactApi.getAll();
+        setContact(contact);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    listContact();
+  }, [])
 
   useEffect(() => {
     const listProduct = async () => {
@@ -54,7 +65,15 @@ function App() {
     }
     listCategory();
   }, []);
-
+  const AddContact = async (contact ) => {
+    try {
+      const {data:contactFake} = await ContactApi.add(contact);
+      const arrContact = [...contacts,contactFake ];
+      setContact(arrContact);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const handleAdd = async (product ) => {
     try {
       const {data:productFake} = await ProductApi.add(product);
@@ -121,7 +140,9 @@ function App() {
     <Routers
       Products={products}
       Categories={categories}
-      // Blog={blog}
+      Contact={contacts}
+      User = {users}
+      onAddContact={AddContact}
       onRemove={handleRemove}
       onAdd={handleAdd}
       onRemoveCate={RemoveCate}
