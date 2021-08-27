@@ -47,7 +47,7 @@ const AddTodoPage = ({ onAdd, Categories }) => {
         uploads.append("quantity", data.quantity);
         uploads.append("categoryId", data.categoryId);
         uploads.append("status", data.status);
-        
+        console.log(uploads);
         onAdd(uploads);
         swal("You add new success!", "...comeback to list!");
         history.push('/admin/product/list');

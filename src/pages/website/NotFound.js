@@ -1,10 +1,13 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import Website from '../../Layouts/website'
 
-const NotFound = () => {
+const NotFound = ({handleSetTitle}) => {
+    useEffect(()=>{
+        handleSetTitle('Not Found Page')
+    })
     return (
-        <Website title="Not Found Page">
-        </Website>
+        <div title="Not Found Page">
+        </div>
     )
 }
 

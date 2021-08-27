@@ -3,11 +3,12 @@ import Header from '../components/Header';
 import bg_header from '../image/bg_header.jpg';
 import {NavLink,Link} from 'react-router-dom';
 import Footer from '../components/Footer';
-const Website = ({title="title",className,children}) => {
+const Website = ({title,className,children,signout}) => {
     // window.scrollTo(0,0);
+
     return (
         <div className={className}>
-            <Header/>
+            <Header signout={signout}/>
             <div className="bg-header bg-left-top-right h-[300px] " >
                 <h1 className="text-[72px] font-bold pt-24 pl-20 text-white">{title}</h1>
                 <ul className="flex items-center">

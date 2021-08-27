@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Website from '../../Layouts/website'
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import swal from 'sweetalert';
-const Contact = ({ onAddContact }) => {
+const Contact = ({ onAddContact,signOut,handleSetTitle }) => {
+    useEffect(()=>{
+        handleSetTitle('Contact')
+    })
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = (data) => {
         let uploads = new FormData();
@@ -16,7 +19,7 @@ const Contact = ({ onAddContact }) => {
         onAddContact(uploads);
     }
     return (
-        <Website title="Contact">
+        <div title="Contact" signOut={signOut}>
                 <div className="lienhe image_contact" >
                     <div className="grid grid-cols-1 md:grid-cols-2">
                         <div className="contact text-center py-4">
@@ -94,7 +97,7 @@ const Contact = ({ onAddContact }) => {
                     </div>
                 </div>
 
-        </Website>
+        </div>
     )
 }
 

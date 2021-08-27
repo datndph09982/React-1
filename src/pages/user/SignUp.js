@@ -1,9 +1,13 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { useForm } from 'react-hook-form';
 import {Link} from 'react-router-dom';
 import UserApi from '../../api/userApi'
 import Website from '../../Layouts/website';
-    const SignUp = () => {
+    const SignUp = ({handleSetTitle}) => {
+        useEffect(()=>{
+            handleSetTitle('Sign up')
+    
+        })
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
@@ -45,7 +49,7 @@ import Website from '../../Layouts/website';
     }
     return (
         <>
-            <Website title="Sign up">
+            <div title="Sign up">
             <div className="mt-24 flex items-center justify-center bg-gray-50  sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <div>
@@ -113,7 +117,7 @@ import Website from '../../Layouts/website';
                     </form>
                 </div>
             </div>
-            </Website>
+            </div>
         </>
     )
 

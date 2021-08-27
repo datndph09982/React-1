@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useParams,Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../action/cartAction';
 import CategoryApi from '../../api/CategoryApi';
 import ProductApi from '../../api/ProductApi';
 import Website from '../../Layouts/website';
-const DetailProduct = ({Categories}) => {
+const DetailProduct = ({Categories,handleSetTitle}) => {
+    useEffect(()=>{
+        handleSetTitle('Detail product')
+    })
     const { id } = useParams();
     const [product, setProducts] = useState({});
     const [cate, setCate] = useState({});
-    const [relatedPro, setRelatedPro]= useState({});
+    const [relatedPro, setRelatedPro]= useState([]);
+    console.log(relatedPro);
     const  settings = {
         dots: false,
         infinite: true,
@@ -15,6 +21,10 @@ const DetailProduct = ({Categories}) => {
         slidesToShow: 4,
         slidesToScroll: 1
     };
+    const dispatch = useDispatch();
+    const handleClick=(product)=>{
+        dispatch(addToCart({...product}));
+    }
     useEffect(() => {
         const getProduct = async () => {
             try {
@@ -48,10 +58,27 @@ const DetailProduct = ({Categories}) => {
         }
         cateId();
     },[]);
-    
+    const listRelated = ()=>{
+        return <div class=" w-4/5  mx-auto mt-2 " >
+        <div class="grid grid-cols-3 gap-6 justify-items-center">
+        {relatedPro.map(product=>{
+            return <div  className="bg-white border-gray-100 border h-[500px] w-[260px] px-6 pt-6 pb-10 mb-12 text-center hover:shadow-2xl">
+                    <img className="w-48 h-48 mb-4" src={`http://localhost:4000/api/product/image/${product._id}`} />
+                    <Link to={`/product/${product._id}`} className="text-2xl text-black font-black  hover:text-[#c0aa83]">{product.name}</Link>
+                    <p className="w-3/4 mx-auto mt-4 text-sm">Duis et aliquam orci. Vivamus augue quam, ...</p>
+                    <h1 className="text-2xl text-[#c0aa83] mx-auto font-extrabold mt-3 mb-5">${product.price}</h1>
+                    <button onClick={()=>{handleClick(product)}} className="block py-1 w-40 mx-auto align-middle text-white no-underline bg-[#c0aa83] hover:bg-black ">
+                        <i className="fa fa-shopping-cart pr-0 md:pr-3" />
+                        <span className="pb-1 text-sx font-bold  text-white  block md:inline-block">Add to cart</span>
+                    </button>
+                </div>
+                })}
+                </div>
+            </div>
+    }
 
     return (
-             <Website title="Detail product">
+             <div title="Detail product">
             <div className="p-20 grid grid-cols-4" >
                 <div className="mx-4 bg-[#f6f6f6] py-8 px-8">
                     <div className="mb-20">
@@ -119,7 +146,9 @@ const DetailProduct = ({Categories}) => {
                         </div>
                     </div>
                     <div className="flex space-x-2 my-4 text-sm font-medium">
-                        <button className="w-1/2 flex items-center justify-center rounded-md bg-black text-white" type="submit">Add to bag</button>
+                        <button 
+                        onClick={()=>{handleClick(product)}}
+                        className="w-1/2 flex items-center justify-center rounded-md bg-black text-white" type="submit">Add to bag</button>
                         <button className="flex-none flex items-center justify-center w-9 h-9 rounded-md text-gray-400 border border-gray-300" type="button" aria-label="like">
                             <svg width={20} height={20} fill="currentColor">
                                 <path fillRule="evenodd" clipRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
@@ -129,7 +158,17 @@ const DetailProduct = ({Categories}) => {
                     <p className="text-sm text-gray-500">Free shipping on all continental US orders.</p>
                 </form>
             </div>
-            
+            {/* related */}
+            <div class="bg-gray-100  mx-auto  mt-10 py-2 pl-6 text-xl font-semibold text-gray-500 " >
+                SIMILAR PRODUCTS
+            </div>
+            {listRelated()}
+            {/* <div class=" w-4/5 h-80 mx-auto mt-2 " >
+              <div class="grid grid-cols-4 gap-4 justify-items-center">
+              {listRelated}
+              </div>
+          </div> */}
+
             <div className="bg-gray-100 w-6/7 mx-auto px-6 py-4 ">
                 <form className="text-gray-500">
                     <label>Comment</label><br />
@@ -178,7 +217,7 @@ const DetailProduct = ({Categories}) => {
         
                 </div>
             </div>
-        </Website>
+        </div>
            
 
     )

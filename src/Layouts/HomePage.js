@@ -2,13 +2,12 @@ import React from 'react'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 
-const HomePage = (props) => {
+const HomePage = ({children,signOut}) => {
     // window.scrollTo(0,0);
-
     return (
         <div>
-            <Header />
-            <h1>{props.children}</h1>
+            <Header signOut={signOut}/>
+            <h1>{children}</h1>
             <Footer/>
         </div>
     )

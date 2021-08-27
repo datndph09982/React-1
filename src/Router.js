@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useState} from 'react'
 import {
     BrowserRouter,
     Route,
@@ -31,7 +31,15 @@ import ProductBycate from './pages/website/ProductBycate';
 import Test from './components/Test';
 import CateHome from './pages/website/CateHome';
 import Listcontact from './pages/admin/contact/list';
+import Cart from './pages/website/Cart';
+import Client from './Layouts/Client';
+import SortAsc from './pages/website/SortAsc';
+import SortDesc from './pages/website/Sortdesc';
 const Routers = (props) => {
+    const [ title, setTitle] =  useState('home');
+    const handleSetTitle = (tit)=>{
+        setTitle(tit);
+    }
     return (
         <div>
             <BrowserRouter>
@@ -66,18 +74,78 @@ const Routers = (props) => {
                            </Switch>
                         {/* </Admin> */}
                     </Route>
+                    
                     <Route>
-                        {/* <Website> */}
+                        {/* <HomePage {...props} title = {title}>
                             <Switch>
+                                <Route exact path="/">
+                                    <Home {...props}/>
+                                </Route>
+                            </Switch>
+                        </HomePage> */}
+                        <Website {...props} title = {title}>
+                             <Switch>
+                                <Route exact path="/">
+                                    <Home {...props} handleSetTitle={handleSetTitle}/>
+                                </Route>
+                                <Route exact path="/homecate/:id"  >
+                                    <CateHome {...props}/> 
+                                </Route>
+                                <Route exact path="/inforuser">
+                                    <InforUser handleSetTitle={handleSetTitle}/>
+                                </Route>
+                                <Route path="/about" exact  >
+                                    <About  handleSetTitle={handleSetTitle}/>
+                                </Route>
+                                <Route path="/contact" exact >
+                                    <Contact {...props} handleSetTitle={handleSetTitle}/>    
+                                </Route>
+                                <Route path="/product/:id" exact >
+                                    <DetailProduct {...props} handleSetTitle={handleSetTitle}/>    
+                                </Route>
+                                <Route path="/signin" >
+                                    <SignIn {...props} handleSetTitle={handleSetTitle}/>    
+                                </Route>
+                                <Route path="/signup" >
+                                    <SignUp {...props} handleSetTitle={handleSetTitle}/>
+                                </Route>
+                                <Route path="/product" exact>
+                                    <ListProduct {...props} handleSetTitle={handleSetTitle}/>
+                                </Route>
+                                <Route exact path="/prodbycate/:id" > 
+                                    <ProductBycate {...props} handleSetTitle={handleSetTitle}/>
+                                </Route>
+                                <Route exact path="/test">
+                                    <Test {...props}/>    
+                                </Route>
+                                <Route exact path="/cart">
+                                    <Cart {...props} handleSetTitle={handleSetTitle}/>
+                                </Route>
+                                <Route exact path="/sortasc">
+                                    <SortAsc {...props} handleSetTitle={handleSetTitle}/>
+                                </Route>
+                                <Route exact path="/sortdesc">
+                                    <SortDesc {...props} handleSetTitle={handleSetTitle}/>
+                                </Route>
+                                <Route path="/*"  exact  >
+                                    <NotFound handleSetTitle={handleSetTitle}/>
+                                </Route>
+                        </Switch>
+                        </Website>
+                    </Route>
+                    
+
+                    {/* <Route >
+                            <Switch >
                                 <Route exact path="/"  >
                                     <Home {...props}/> 
                                 </Route>
                                 <Route exact path="/homecate/:id"  >
                                     <CateHome {...props}/> 
                                 </Route>
-                                <PrivateRoute exact path="/inforuser">
+                                <Route exact path="/inforuser">
                                     <InforUser />
-                                </PrivateRoute>
+                                </Route>
                                 <Route path="/about" exact component={About} />
                                 <Route path="/contact" exact >
                                     <Contact {...props}/>    
@@ -86,7 +154,7 @@ const Routers = (props) => {
                                     <DetailProduct {...props}/>    
                                 </Route>
                                 <Route path="/signin" >
-                                    <SignIn />    
+                                    <SignIn {...props}/>    
                                 </Route>
                                 <Route path="/signup" >
                                     <SignUp {...props}/>
@@ -100,10 +168,12 @@ const Routers = (props) => {
                                 <Route exact path="/test">
                                     <Test {...props}/>    
                                 </Route>
+                                <Route exact path="/cart">
+                                    <Cart {...props}/>
+                                </Route>
                                 <Route path="/*"  exact component={NotFound}/>
                             </Switch>
-                        {/* </Website> */}
-                    </Route>
+                    </Route> */}
                 </Switch>
                 
             </BrowserRouter>

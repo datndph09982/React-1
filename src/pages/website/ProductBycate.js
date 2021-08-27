@@ -2,8 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { Link,useParams } from 'react-router-dom';
 import CategoryApi from '../../api/CategoryApi';
 import ProductApi from '../../api/ProductApi';
-import Website from '../../Layouts/website'
-const ProductBycate = ({Products,Categories}) => {
+import Website from '../../Layouts/website';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../action/cartAction';
+const ProductBycate = ({Products,Categories,handleSetTitle}) => {
+    useEffect(()=>{
+        handleSetTitle('Product by cate')
+    })
+    const dispatch = useDispatch();
+    const handleClick=(product)=>{
+        dispatch(addToCart({...product}));
+    }
     const { id } = useParams();
     const [category, setCategory] = useState({});
     console.log(category);
@@ -25,15 +34,15 @@ const ProductBycate = ({Products,Categories}) => {
                 <Link to={`/product/${product._id}`} className="text-2xl text-black font-black  hover:text-[#c0aa83]">{product.name}</Link>
                 <p className="w-3/4 mx-auto mt-4 text-sm">Duis et aliquam orci. Vivamus augue quam, ...</p>
                 <h1 className="text-2xl text-[#c0aa83] mx-auto font-extrabold mt-3 mb-5">${product.price}</h1>
-                <Link to="/cart" className="block py-1 w-40 mx-auto align-middle text-white no-underline bg-[#c0aa83] hover:bg-black ">
+                <button onClick={()=>{handleClick(product)}} className="block py-1 w-40 mx-auto align-middle text-white no-underline bg-[#c0aa83] hover:bg-black ">
                     <i className="fa fa-shopping-cart pr-0 md:pr-3" />
                     <span className="pb-1 text-sx font-bold  text-white  block md:inline-block">Add to cart</span>
-                </Link>
+                </button>
             </div>
     ))
     console.log(productById);
     return (
-        <Website title="All product">
+        <div title="All product">
             <div className="p-20 grid grid-cols-4" >
                 <div className="mx-4 bg-[#f6f6f6] py-8 px-8">
                     <div className="mb-20">
@@ -80,7 +89,7 @@ const ProductBycate = ({Products,Categories}) => {
                     </div>
                 </div>
             </div>
-        </Website>
+        </div>
     )
 }
 

@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Website from '../../Layouts/website'
 import { Link } from 'react-router-dom';
 import Section2 from '../../components/Section2';
-const About = () => {
+const About = ({handleSetTitle}) => {
+
+    useEffect(()=>{
+        handleSetTitle('About Us')
+
+    })
     return (
-        <Website title="About us">
+        <div >
             <div className="bg-white h-[580px] grid grid-cols-2 gap-6 px-24 border-b">
                 <div className="flex items-center">
                     <div>
@@ -58,7 +63,7 @@ const About = () => {
                 </ul>
             </div>
             <Section2 />
-        </Website>
+        </div>
     )
 }
 

@@ -5,8 +5,17 @@ import Slide from '../../components/Slide';
 import Section1 from '../../components/Section1';
 import Section2 from '../../components/Section2';
 import Slider from "react-slick";
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../action/cartAction';
 import CategoryApi from '../../api/CategoryApi'
-const Home = ({Products,Categories}) => {
+const Home = ({Products,Categories,handleSetTitle}) => {
+    useEffect(()=>{
+        handleSetTitle('HOME PAGE')
+    })
+    const dispatch = useDispatch();
+    const handleClick=(product)=>{
+        dispatch(addToCart({...product}));
+    }
     // window.scrollTo(0,0);
     const  settings = {
         dots: false,
@@ -22,10 +31,10 @@ const Home = ({Products,Categories}) => {
                 <Link to={`/product/${product._id}`} className="text-2xl text-black font-black  hover:text-[#c0aa83]">{product.name}</Link>
                 <p className="w-3/4 mx-auto mt-4 text-sm">Duis et aliquam orci. Vivamus augue quam, ...</p>
                 <h1 className="text-2xl text-[#c0aa83] mx-auto font-extrabold mt-3 mb-5">${product.price}</h1>
-                <Link to="/cart" className="block py-1 w-40 mx-auto align-middle text-white no-underline bg-[#c0aa83] hover:bg-black ">
+                <button  onClick={()=>{handleClick(product)}} className="block py-1 w-40 mx-auto align-middle text-white no-underline bg-[#c0aa83] hover:bg-black ">
                     <i className="fa fa-shopping-cart pr-0 md:pr-3" />
                     <span className="pb-1 text-sx font-bold  text-white  block md:inline-block">Add to cart</span>
-                </Link>
+                </button>
                 </div>
             </div>
     })
@@ -36,7 +45,7 @@ const Home = ({Products,Categories}) => {
     })
     return (
         
-        <HomePage className="">
+        <div className="">
             <Slide />
             <Section1 />
             <div className="bg-[#f6f6f6] px-20 border-b pb-16 relative">
@@ -72,7 +81,7 @@ const Home = ({Products,Categories}) => {
                 </div>
             </div>
             <Section2 />
-        </HomePage>
+        </div>
     )
 }
 

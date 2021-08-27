@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState  } from 'react';
 import './App.css';
+import { useHistory } from 'react-router';
 import Routers from './Router.js';
 import ProductApi from './api/ProductApi.js';
 import NewsApi from './api/NewsApi.js';
@@ -9,6 +10,9 @@ import { Router } from 'react-router';
 import Addcate from './pages/admin/category/add';
 import UserApi from './api/userApi';
 import ContactApi from './api/ContactApi';
+import { isAuthenticate, signOut } from './auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCart, setCart,deleteAllCart } from './action/cartAction';
 function App() {
 
 
@@ -16,17 +20,60 @@ function App() {
   const [categories, setCategory] = useState([]);
   const [contacts, setContact] = useState([]);
   const [users, setUsers] = useState([]);
+  
+
+  const dispatch = useDispatch();
+
+  // save user state
   useEffect(() => {
-    const listUser = async () => {
-      try {
-        const { data: user } = await UserApi.getAll();
-        setUsers(user);
-      } catch (error) {
-        console.log(error);
-      }
+    const {user} = isAuthenticate();
+    if (user) {
+      (async () => {
+        try {
+          const { data: userProfile } = await UserApi.get(user._id);
+          setUsers(userProfile);
+        } catch (error) {
+          console.log(error.response)
+        }
+      })();
     }
-    listUser();
   }, [])
+ 
+  //login get user, save state
+  const handleSignin = async (data)=>{
+
+    if(localStorage.getItem('history')==null){
+      localStorage.setItem('history','[]');
+    }
+    try{
+      const {data : users} = await UserApi.get(data._id);
+      localStorage.setItem('history',JSON.stringify(users.history))
+      localStorage.setItem('cart',JSON.stringify(users.history));
+      dispatch(setCart(users.history));
+      setUsers(users);
+    }catch(error){
+    }
+  }
+  const cart = useSelector(data => data.cart.data);
+  const history = useHistory();
+
+  const  handleSignout = () =>{
+    dispatch(deleteAllCart())
+    const userSignout = {...users,history: cart}
+    const {token} = isAuthenticate();
+    UserApi.update(userSignout._id,userSignout)
+    .then(data=>{
+      // signOut(()=>{
+      //   // history.push('/signin');
+      // })
+    })
+    .then(()=>{
+      dispatch(deleteAllCart());
+      setUsers('');
+      history.push('/signin');
+    })
+  }
+  //save contact
   useEffect(() => {
     const listContact = async () => {
       try {
@@ -149,7 +196,15 @@ function App() {
       onAddCate={AddCate}
       onUpdateCate={UpdateCate}
       onUpdatePro={UpdatePro}
-    />
+      signout = {handleSignout}
+      signIn = {handleSignin}
+
+      //pagination
+        // posts={currentPosts}
+        // postsPerPage={postsPerPage}
+        // totalPosts={products.length}
+        // paginate={paginate}
+      />
     
   );
 

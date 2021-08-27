@@ -26,8 +26,14 @@ const UserApi = {
 		return axiosClient.delete(url);
 	},
 	update(id, data){
-		const url = `/users/${id}`;
+		const url = `/user/${id}`;
 		return axiosClient.put(url, data);
+	},
+	checkAdmin(id,token){
+		const url = `/checkAdmin/${id}`;
+		return axiosClient.get(url,{
+			headers:{Authorization: `Bearer${token}`}
+		})
 	}
 
 }

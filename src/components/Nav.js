@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink, useHistory, useLocation,Link } from 'react-router-dom';
-import { signOut, isAuthenticate } from '../auth';
-const Nav = () => {
+import {  signOut,isAuthenticate } from '../auth';
+const Nav = ({signOut}) => {
+    console.log(signOut);
+    const cart = useSelector(state => state.cart.data);
     const history = useHistory();
     const { pathname } = useLocation();
     const [isLogged, setIsLogged] = useState(false);
     const [menuDrop, setMenuDrop] = useState(false);
+    const [search, setSearch] = useState(false);
     const { user } = isAuthenticate();
     useEffect(() => {
         isAuthenticate() && setIsLogged(true);
     }, [pathname, isLogged])
     const onClick =()=>{
         setMenuDrop(!menuDrop);
-        console.log(menuDrop);
-        
+    }
+    const onClickForm = () =>{
+        setSearch(!search);
     }
     return (
         <>
-            <ul>
+            <ul className={search ? `opacity-[0.1] inline-block transition ease-in-out duration-150`: 'inline-block'}>
                 <li className="inline-block  px-4 text-lg font-black ">
                     <NavLink className="hover:text-[#c0aa83] focus:text-[#c0aa83]" to="/" exact activeClassName="active">Home
                         <li className="fas fa-angle-right ml-2 "></li>
@@ -59,7 +64,7 @@ const Nav = () => {
                             <Link  className="text-gray-700 block px-4 py-2 text-base hover:text-[#c0aa83] focus:text-[#c0aa83]"
                                 onClick={() => signOut(() => {
                                     setIsLogged(false)
-                                    history.push("/");
+                                    history.push("/signin");
                                 })}
                                 role="menuitem" tabIndex={-1} id="menu-item-1">Sign Out
                             </Link>
@@ -77,16 +82,20 @@ const Nav = () => {
                     ): ''}
                 </div>
                 {/*end dropdown */}
+                </ul>
+                <ul className="inline-block">
                 <li className="inline-block ml-10">
-                    <NavLink to="/" className="inline-block" exact activeClassName="active">
-                        <span className="w-5 h-5 rounded-full bg-red-500 px-2 text-white mr-\[4px\]">2</span>
+                    <NavLink to="/cart" className="inline-block" exact activeClassName="active">
+                        <span className="w-5 h-5 rounded-full bg-red-500 px-2 text-white mr-\[4px\]">{cart.length}</span>
                         <i className="fa fa-shopping-cart"></i>
                     </NavLink>
                 </li>
-                <li className="inline-block ml-6">
-                    <NavLink to="/" className="inline-block fas fa-search" exact activeClassName="active">
-
+                <li className="inline-block ml-6 relative">
+                    <NavLink to="/" onClick={onClickForm} className="inline-block fas fa-search" exact activeClassName="active" aria-expanded="true" aria-haspopup="true">
                     </NavLink>
+                    {search ? (
+                        <input className="transition ease-in-out duration-700 w-60 h-10 opacity-100 bg-[#f6f6f6] border-2 border-gray-800 rounded absolute mt-[-10px] right-5 pl-3 placeholder-gray-800 placeholder-" placeholder="SEARCH" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}/>
+                    ):''}
                 </li>
             </ul>
         </>

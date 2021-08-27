@@ -1,4 +1,6 @@
 import { axiosClient } from './axiosClient';
+import {isAuthenticate} from '../auth';
+const {user, token} = isAuthenticate();
 const ProductApi = {
     getAll(){
         const url = `/products`;
@@ -42,16 +44,32 @@ const ProductApi = {
         return axiosClient.get(url);
     },
     remove(id){
-        const url = `/product/${id}`;
-        return axiosClient.delete(url);
+        const url = `/product/${id}/${user._id}`;
+        return axiosClient.delete(url,{
+            headers:{
+                "Authorization":`Bearer ${token}`
+            }
+        });
     },
     add(product){
-        const url = `/products`;
-        return axiosClient.post(url, product);
+        const url = `/products/${user._id}`;
+        return axiosClient.post(url, product
+            ,{
+            headers:{
+                "Authorization":`Bearer ${token}`
+            }
+        }
+        );
     },
     edit(id,product){
-        const url = `/product/${id}`;
-        return axiosClient.put(url,product);
+        const url = `/product/${id}/${user._id}`;
+        return axiosClient.put(url,product
+            ,{
+            headers:{
+                "Authorization":`Bearer ${token}`
+            }
+        }
+        );
     }
 
 }

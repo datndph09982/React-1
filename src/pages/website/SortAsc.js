@@ -1,9 +1,9 @@
-import React, { useEffect,useState } from 'react'
-import Website from '../../Layouts/website'
+import React,{useEffect,useState} from 'react'
+import ProductApi from '../../api/ProductApi';
 import {Link} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../action/cartAction';
-const ListProduct = ({Products,Categories,handleSetTitle}) => {
+const SortAsc = ({handleSetTitle,Categories}) => {
     useEffect(()=>{
         handleSetTitle('Shop')
 
@@ -16,15 +16,27 @@ const ListProduct = ({Products,Categories,handleSetTitle}) => {
     const onClick =()=>{
         setMenuDrop(!menuDrop);
     }
-
-    const [currentPage, setCurrentPage] = useState(1);
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+        const listProduct = async () => {
+          try {
+            const { data: product } = await ProductApi.getSort();
+            setProducts(product);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        listProduct();
+      }, [])
+      console.log(products);
+      const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(5);
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = Products.slice(indexOfFirstPost, indexOfLastPost);
+    const currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
     const paginate = pageNumber => setCurrentPage(pageNumber);
     const pageNumbers = [];
-    const totalPosts = Products.length;
+    const totalPosts = products.length;
     for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
         pageNumbers.push(i);
     }
@@ -41,7 +53,6 @@ const ListProduct = ({Products,Categories,handleSetTitle}) => {
                     </nav>
                 </div>
     }
-
     const productList = currentPosts.map((product,index)=>{
         return <div key={index} className="bg-white border-gray-100 border h-[500px] w-[260px] px-6 pt-6 pb-10 mb-24 text-center hover:shadow-2xl">
                 <img className="w-48 h-48 mb-4" src={`http://localhost:4000/api/product/image/${product._id}`} />
@@ -55,42 +66,42 @@ const ListProduct = ({Products,Categories,handleSetTitle}) => {
             </div>
     })
     return (
-        <div title="All product">
-            <div className="p-20 grid grid-cols-4" >
-                <div className="mx-4 bg-[#f6f6f6] py-8 px-8">
-                    <div className="mb-20">
-                        <div className="text-3xl font-bold border-b-2 border-gray-300 py-2 my-10">Cart</div>
-                        <div className="text-medium font-medium">No products in the cart</div>
-                    </div>
-                    <div className="my-10">
-                        <div className="text-3xl font-bold border-b-2 border-gray-300 py-2 mb-6">Category</div>
-                        <div>
-                            <ul>
-                                <li className="text-lg font-bold mb-4">
-                                    <Link className="hover:text-[#c0aa83] focus:text-[#c0aa83]" to="/product" exact activeClassName="active">
-                                    <li className="fas fa-angle-right mr-2 text-[#c0aa83]"></li>
-                                        All products
-                                    </Link>
-                                </li>
-                                {Categories.map(((cate,index)=>{
-                                    return <li className="   text-lg font-bold mb-4">
-                                                <Link  className="hover:text-[#c0aa83] focus:text-[#c0aa83]" to={`/prodbycate/${cate._id}`} exact activeClassName="active">
-                                                <li className="fas fa-angle-right mr-2 text-[#c0aa83]"></li>
-                                                    {cate.name}
-                                                </Link>
-                                            </li>
-                                }))}
-                            </ul>
-                        </div>
+        <div >
+        <div className="p-20 grid grid-cols-4" >
+            <div className="mx-4 bg-[#f6f6f6] py-8 px-8">
+                <div className="mb-20">
+                    <div className="text-3xl font-bold border-b-2 border-gray-300 py-2 my-10">Cart</div>
+                    <div className="text-medium font-medium">No products in the cart</div>
+                </div>
+                <div className="my-10">
+                    <div className="text-3xl font-bold border-b-2 border-gray-300 py-2 mb-6">Category</div>
+                    <div>
+                        <ul>
+                            <li className="text-lg font-bold mb-4">
+                                <Link className="hover:text-[#c0aa83] focus:text-[#c0aa83]" to="/product" exact activeClassName="active">
+                                <li className="fas fa-angle-right mr-2 text-[#c0aa83]"></li>
+                                    All products
+                                </Link>
+                            </li>
+                            {Categories.map(((cate,index)=>{
+                                return <li className="   text-lg font-bold mb-4">
+                                            <Link  className="hover:text-[#c0aa83] focus:text-[#c0aa83]" to={`/prodbycate/${cate._id}`} exact activeClassName="active">
+                                            <li className="fas fa-angle-right mr-2 text-[#c0aa83]"></li>
+                                                {cate.name}
+                                            </Link>
+                                        </li>
+                            }))}
+                        </ul>
                     </div>
                 </div>
-                {/* main content shop page */}
-                <div className="col-span-3 px-4">
-                    <div className="mb-24">
-                        <div className="float-left text-lg text-gray-700 font-medium py-4">Showing all products</div>
-                        <div className="float-right w-48 px-5 py-4 border-gray-400 border">
-                            
-                        <div className="relative inline-block text-left">
+            </div>
+            {/* main content shop page */}
+            <div className="col-span-3 px-4">
+                <div className="mb-24">
+                    <div className="float-left text-lg text-gray-700 font-medium py-4">Price product's low to high</div>
+                    <div className="float-right w-48 px-5 py-4 border-gray-400 border">
+                        
+                    <div className="relative inline-block text-left">
                     <li className="inline-block  px-4 text-lg font-black">
                         <a type="button"  onClick={onClick} className=" hover:text-[#c0aa83] focus:text-[#c0aa83] cursor-pointer  text-black  " id="menu-button" aria-expanded="true" aria-haspopup="true">
                             Sort price
@@ -111,16 +122,16 @@ const ListProduct = ({Products,Categories,handleSetTitle}) => {
                     </div>
                     ): ''}
                 </div>
-                        </div>
                     </div>
-                    <div className="grid grid-cols-3">
-                        {productList}
-                    </div>
-                    {pagination()}
                 </div>
+                <div className="grid grid-cols-3">
+                    {productList}
+                </div>
+                {pagination()}
             </div>
         </div>
+    </div>
     )
 }
 
-export default ListProduct
+export default SortAsc

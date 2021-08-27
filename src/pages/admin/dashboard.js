@@ -2,7 +2,6 @@ import React from 'react'
 import Admin from '../../Layouts/admin';
 
 const Dashboard = ({Products,Categories,User,Contact}) => {
-    console.log(Categories[0].createdAt);
     return (
         <Admin title="dashboard">
 
